@@ -1,0 +1,26 @@
+#!/bin/bash
+#BSUB -J beta_subset[4-6]
+#BSUB -W 2:00
+#BSUB -q e40short
+#BSUB -oo /rsrch8/home/genetics/tchu/TCGA_LUAD/step6_estimate/beta_clonal_subset_%I.out
+#BSUB -eo /rsrch8/home/genetics/tchu/TCGA_LUAD/step6_estimate/beta_clonal_subset_%I.err
+#BSUB -n 12
+#BSUB -M 100
+#BSUB -R "span[hosts=1] rusage[mem=100]"
+
+ID=$LSB_JOBINDEX
+
+module load python
+source /rsrch8/home/genetics/tchu/myenv/bin/activate
+
+#sample=TCGA-44-2655
+sample=TCGA-50-6592
+#sample=TCGA-55-6986
+
+mkdir -p /rsrch8/home/genetics/tchu/TCGA_LUAD/step6_estimate/results/${sample}/
+path=/rsrch8/home/genetics/tchu/TCGA_LUAD/step6_estimate/results/${sample}
+
+method=byAF # uniform or byAF
+
+echo "Begin"
+python /rsrch8/home/genetics/tchu/TCGA_LUAD/step6_estimate/step2_beta.py ${sample} ${ID} ${path} ${method}

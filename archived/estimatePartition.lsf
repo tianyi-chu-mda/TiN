@@ -1,0 +1,14 @@
+#!/bin/bash
+#BSUB -W 240:00
+#BSUB -q cgel
+#BSUB -o estimatePartition.out
+#BSUB -e estimatePartition.err
+#BSUB -n 40
+#BSUB -M 100
+#BSUB -R "span[hosts=1] rusage[mem=100]"
+
+module load python
+source /rsrch8/home/genetics/tchu/myenv/bin/activate
+
+echo "Begin"
+python estimatePartition.py

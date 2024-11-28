@@ -1,0 +1,13 @@
+#!/bin/bash
+#BSUB -W 240:00
+#BSUB -q cgel
+#BSUB -o /rsrch8/scratch/genetics/tchu/logs/estimaTiN.out
+#BSUB -e /rsrch8/scratch/genetics/tchu/logs/estimaTiN.err
+#BSUB -n 40
+#BSUB -M 100
+#BSUB -R "span[hosts=1] rusage[mem=100]"
+
+module load python
+source /rsrch8/home/genetics/tchu/myenv/bin/activate
+
+python estimaTiN.py

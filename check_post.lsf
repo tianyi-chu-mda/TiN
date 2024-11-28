@@ -1,0 +1,26 @@
+#!/bin/bash
+#BSUB -J subset[1-3]
+#BSUB -W 1:00
+#BSUB -q short
+#BSUB -oo check_post_%I.out
+#BSUB -eo check_post_%I.err
+#BSUB -n 12
+#BSUB -M 40
+#BSUB -R "span[hosts=1] rusage[mem=40]"
+
+ID=$LSB_JOBINDEX
+
+module load python
+source /rsrch8/home/genetics/tchu/myenv/bin/activate
+
+sample=TCGA-44-2655
+#sample=TCGA-50-6592
+#sample=TCGA-55-6986
+
+mkdir -p /rsrch8/home/genetics/tchu/TCGA_LUAD/step6_estimate/check_post/${sample}/
+path=/rsrch8/home/genetics/tchu/TCGA_LUAD/step6_estimate/check_post/${sample}
+
+method=byAF # uniform or byAF
+
+echo "Begin"
+python /rsrch8/home/genetics/tchu/TCGA_LUAD/step6_estimate/check_post.py ${sample} ${ID} ${path} ${method}

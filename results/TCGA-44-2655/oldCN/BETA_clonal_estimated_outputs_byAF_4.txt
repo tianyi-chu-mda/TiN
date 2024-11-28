@@ -1,0 +1,2 @@
+Optimal TiN: 0.30303030303030304
+Minimum Negative Log Likelihood: 3377366.46640059

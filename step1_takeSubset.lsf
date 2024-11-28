@@ -1,0 +1,22 @@
+#!/bin/bash
+#BSUB -J takeSubset 
+#BSUB -W 2:00
+#BSUB -q e80short
+#BSUB -oo takeSubset.out
+#BSUB -eo takeSubset.err
+#BSUB -n 12
+#BSUB -M 40
+#BSUB -R "rusage[mem=40]"
+
+sample=TCGA-44-2655
+#sample=TCGA-50-6592
+#sample=TCGA-55-6986
+echo "Subsampling begins for $sample"
+
+file="/rsrch6/home/genetics/vanloolab/secure/TCGA/LUAD_WGS_BAM/${sample}/partitioned/TiN10/newCN_AFcombined/filtered_final.txt"
+mkdir -p /rsrch8/home/genetics/tchu/TCGA_LUAD/step6_estimate/subsamples/${sample}/
+outpath=/rsrch8/home/genetics/tchu/TCGA_LUAD/step6_estimate/subsamples/${sample}
+
+(head -n 1 $file && tail -n +2 $file | shuf -n 500000) > $outpath/random_sample1.txt
+(head -n 1 $file && tail -n +2 $file | shuf -n 500000) > $outpath/random_sample2.txt
+(head -n 1 $file && tail -n +2 $file | shuf -n 500000) > $outpath/random_sample3.txt

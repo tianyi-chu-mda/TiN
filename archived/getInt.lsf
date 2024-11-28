@@ -1,0 +1,15 @@
+#!/bin/bash
+#BSUB -J process_chr[1-24]
+#BSUB -W 24:00
+#BSUB -q e40medium
+#BSUB -o /rsrch8/scratch/genetics/tchu/logs/getInt_chr%I.out
+#BSUB -n 40
+#BSUB -M 40
+#BSUB -R "span[hosts=1] rusage[mem=40]"
+
+# No longer in use- this script forces combined tables to contain integers only, no floats
+chr=$LSB_JOBINDEX
+
+input_file="/rsrch6/home/genetics/vanloolab/secure/TCGA/LUAD_WGS_BAM/TCGA-44-2655/partitioned/combinedTables/chr${chr}Final.txt"
+output_file="/rsrch6/home/genetics/vanloolab/secure/TCGA/LUAD_WGS_BAM/TCGA-44-2655/partitioned/combinedTablesInt/chr${chr}Final.txt"
+awk 'NR==1 {print; next} {for(i=1; i<=NF; i++) $i=int($i)}1' OFS="\t" "$input_file" > "$output_file"
